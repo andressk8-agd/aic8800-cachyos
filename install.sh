@@ -83,9 +83,6 @@ EOF
 # El combo AIC8800 usa su propio transporte HCI. Registrarlo antes que
 # btusb para que se quede con la interfaz Bluetooth del adaptador.
 softdep btusb pre: aic_btusb
-
-# Ruta de firmware para el lado Bluetooth del AIC8800D80.
-options aic_btusb aic_fw_path=/lib/firmware/aic8800_fw/USB/aic8800D80
 EOF
 }
 

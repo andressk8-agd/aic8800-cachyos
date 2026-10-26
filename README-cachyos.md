@@ -74,6 +74,27 @@ bluetoothctl list           # debe aparecer un controlador
 dmesg | grep -iE 'aic|8800|hci'
 ```
 
+## WiFi con WPA2/WPA3 (SAE)
+
+Este firmware **no asocia bien en modo SAE (WPA3)**. Si el AP anuncia
+`WPA2 WPA3`, NetworkManager elige SAE y la asociación se rechaza con
+`CTRL-EVENT-ASSOC-REJECT ... status_code=1`.
+
+Solución: forzar WPA2-PSK en el perfil.
+
+```bash
+nmcli connection modify 'Conejos_5G' \
+    wifi-sec.key-mgmt wpa-psk \
+    wifi-sec.pmf 1
+nmcli connection up 'Conejos_5G'
+```
+
+En NetworkManager, `wifi-sec.pmf 1` equivale a PMF deshabilitado. Si el AP
+fuera WPA3-only, habría que usar otro AP o esperar soporte SAE del driver.
+
+Verificado en esta tarjeta: `Conejos_5G`, canal 100 (5500 MHz), 80 MHz,
+HE-MCS 7, ~360 Mbit/s de TX, ping 7 ms y HTTPS correcto.
+
 ## Si algo falla
 
 WiFi:
