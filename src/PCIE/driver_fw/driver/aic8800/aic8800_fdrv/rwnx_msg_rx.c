@@ -116,7 +116,7 @@ static inline int rwnx_rx_chan_switch_ind(struct rwnx_hw *rwnx_hw,
 			/* If mgmt_roc is true, remain on channel has been started by ourself */
 			if (!roc_elem->mgmt_roc) {
 				/* Inform the host that we have switch on the indicated off-channel */
-				cfg80211_ready_on_channel(roc_elem->wdev, (u64)(rwnx_hw->roc_cookie_cnt),
+				cfg80211_ready_on_channel(roc_elem->wdev, RWNX_ROC_COOKIE(rwnx_hw, roc_elem),
 									  roc_elem->chan, roc_elem->duration, GFP_ATOMIC);
 			}
 
@@ -225,7 +225,7 @@ static inline int rwnx_rx_remain_on_channel_exp_ind(struct rwnx_hw *rwnx_hw,
 	/* If RoC has been cancelled before we switched on channel, do not call cfg80211 */
 	if (!roc_elem->mgmt_roc && roc_elem->on_chan) {
 		/* Inform the host that off-channel period has expired */
-		cfg80211_remain_on_channel_expired(roc_elem->wdev, (u64)(rwnx_hw->roc_cookie_cnt),
+		cfg80211_remain_on_channel_expired(roc_elem->wdev, RWNX_ROC_COOKIE(rwnx_hw, roc_elem),
 										   roc_elem->chan, GFP_ATOMIC);
 	}
 
@@ -927,7 +927,7 @@ static inline int rwnx_rx_sm_disconnect_ind(struct rwnx_hw *rwnx_hw,
 	struct net_device *dev;
 #ifdef AICWF_RX_REORDER
 	struct reord_ctrl_info *reord_info, *tmp;
-	u8 *macaddr;
+	const unsigned char	*macaddr;
 	struct aicwf_rx_priv *rx_priv;
 #endif
 

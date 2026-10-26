@@ -131,6 +131,9 @@ struct rwnx_sw_txhdr {
 #endif
 	
 	struct sk_buff *skb;
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 3, 0)
+	u64 mgmt_cookie;  /* cfg80211's mgmt_tx cookie, 0 if none; see rwnx_txdatacfm() */
+#endif
 
     struct rwnx_ipc_buf ipc_data;
     struct rwnx_ipc_buf ipc_desc;

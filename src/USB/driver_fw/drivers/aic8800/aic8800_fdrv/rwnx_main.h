@@ -91,7 +91,9 @@ void aicwf_p2p_alive_timeout(struct timer_list *t);
 int rwnx_send_check_p2p(struct cfg80211_scan_request *param);
 void apm_staloss_work_process(struct work_struct *work);
 void apm_probe_sta_work_process(struct work_struct *work);
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0))
+/* netdev arg added in 6.13; backported to 6.12.101 */
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0)) || \
+    (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 12, 101))
 int rwnx_cfg80211_set_monitor_channel_(struct wiphy *wiphy,
                                              struct net_device *dev,
                                              struct cfg80211_chan_def *chandef);
@@ -100,7 +102,11 @@ int rwnx_cfg80211_set_monitor_channel_(struct wiphy *wiphy,
                                              struct cfg80211_chan_def *chandef);
 #endif
 int rwnx_cfg80211_probe_client(struct wiphy *wiphy, struct net_device *dev,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 3, 0)
+            const u8 *peer, u64 cookie);
+#else
             const u8 *peer, u64 *cookie);
+#endif
 void rwnx_cfg80211_mgmt_frame_register(struct wiphy *wiphy,
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(3,6,0))
                    struct net_device *dev,
