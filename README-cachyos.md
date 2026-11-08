@@ -59,6 +59,17 @@ modinfo ./aic8800_fdrv.ko | grep vermagic
 
 Si el `vermagic` no coincide con `uname -r`, usa `./build.sh` para recompilar.
 
+Instalación sin compilar, desde el tarball del release:
+
+```bash
+tar xzf aic8800-cachyos-7.3-prebuilt.tar.gz
+cd aic8800-cachyos-7.3-prebuilt
+sudo ./install-prebuilt.sh
+```
+
+El tarball incluye el firmware, los tres `.ko` y `install-prebuilt.sh`, que
+verifica el `vermagic` antes de instalar.
+
 ## Instalar
 
 Instalación para el kernel actual:
