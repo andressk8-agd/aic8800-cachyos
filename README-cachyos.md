@@ -41,6 +41,24 @@ make -C src/USB/driver_fw/drivers/aic8800  LLVM=1 -j$(nproc)
 make -C src/USB/driver_fw/drivers/aic_btusb LLVM=1 -j$(nproc)
 ```
 
+## Módulos precompilados (release)
+
+El release
+[`v1.0.0-cachyos-7.3.3`](https://github.com/andressk8-agd/aic8800-cachyos/releases/tag/v1.0.0-cachyos-7.3.3)
+incluye `aic_load_fw.ko`, `aic8800_fdrv.ko` y `aic_btusb.ko` compilados para
+**`7.3.3-1-cachyos` (x86_64)**, además de un paquete con los `.ko`
+históricos de `7.3.0-4-cachyos`.
+
+Un módulo solo carga en la versión exacta de kernel para la que fue
+compilado. Compruébalo antes de instalarlo:
+
+```bash
+uname -r
+modinfo ./aic8800_fdrv.ko | grep vermagic
+```
+
+Si el `vermagic` no coincide con `uname -r`, usa `./build.sh` para recompilar.
+
 ## Instalar
 
 Instalación para el kernel actual:
