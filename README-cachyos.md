@@ -121,8 +121,18 @@ nmcli connection up 'Conejos_5G'
 En NetworkManager, `wifi-sec.pmf 1` equivale a PMF deshabilitado. Si el AP
 fuera WPA3-only, habría que usar otro AP o esperar soporte SAE del driver.
 
+El caso completo de `Conejos_5G` (síntoma, diagnóstico, valores del perfil y
+pruebas de velocidad) está en [`docs/conejos-5g.md`](docs/conejos-5g.md).
+También puedes aplicar los ajustes con
+[`scripts/forzar-wpa2-psk.sh`](scripts/forzar-wpa2-psk.sh):
+
+```bash
+./scripts/forzar-wpa2-psk.sh Conejos_5G
+```
+
 Verificado en esta tarjeta: `Conejos_5G`, canal 100 (5500 MHz), 80 MHz,
-HE-MCS 7, ~360 Mbit/s de TX, ping 7 ms y HTTPS correcto.
+HE-MCS 7, 360 Mbit/s RX PHY / 288 Mbit/s TX PHY, ping medio 6,4 ms a la
+puerta de enlace y HTTPS correcto.
 
 ## Si algo falla
 
